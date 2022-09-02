@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function training_module_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.training_module':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Training on the basics of Drupal development') . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<p>' . t('Just install.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_form_alter()
+ */
+function training_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // \dump($form);
+  // \dump($form_id);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function training_module_theme($existing, $type, $theme, $path) {
+  return [
+    'block_template' => [
+      'template' => 'block/block-template',
+      'variables' => [
+        'text' => NULL,
+        'number' => NULL,
+      ],
+    ],
+  ];
+}

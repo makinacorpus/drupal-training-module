@@ -1,0 +1,99 @@
+#####################
+# TRAINING CONTROLLER
+#####################
+
+training_module.page_link:
+  title: 'A simple page'
+  description: 'Display a simple markup page'
+  route_name: training_module.page
+  weight: 1
+training_module.request:
+  title: 'Get the Request in a Controller'
+  description: 'Dump the Request object'
+  route_name: training_module.request
+  weight: 2
+training_module.page_with_argument_link:
+  title: 'A page managing parameters'
+  description: 'Display route parameters in an item list'
+  route_name: training_module.page_with_argument
+  route_parameters: {foo: 1, bar: bar}
+  weight: 3
+training_module.page_with_user_loaded:
+  title: 'A page loading an User'
+  description: 'Display current user account name'
+  route_name: training_module.page_with_user_loaded
+  route_parameters: {user: 1}
+  weight: 4
+training_module.page_with_node_loaded:
+  title: 'A page loading an Node'
+  description: 'Display node title'
+  route_name: training_module.page_with_node_loaded
+  weight: 5
+  route_parameters: {node: 1}
+training_module.page_with_controle_access_link:
+  title: 'Private page : admin only'
+  description: 'Only administrator can access to this page'
+  weight: 6
+  route_name: training_module.page_with_controle_access
+training_module.extend_example_link:
+  title: 'What Controller base provide'
+  description: 'This page use many services provide by the ControllerBase'
+  route_name: training_module.extend_example
+  weight: 7
+
+
+############
+# API DRUPAL
+############
+
+training_module.entiy_management_link:
+  title: 'Entity management'
+  description: 'Different way of using an entity'
+  route_name: training_module.entity_management
+  weight: 8
+
+
+###################
+# TRAINING QUERYING
+###################
+
+training_module.database_link:
+  title: 'Some queries on database'
+  description: 'how to request a database'
+  route_name: training_module.database
+  weight: 9
+training_module.entities_query_link:
+  title: 'Some queries on entities'
+  description: 'how to request entitites'
+  route_name: training_module.entities_query
+  weight: 10
+
+##################
+# TRAINING SERVICE
+##################
+
+training_module.service_link:
+  title: 'Controller using a custom service'
+  description: 'how to use a service'
+  route_name: training_module.service
+  weight: 11
+
+###############
+# TRAINING FORM
+###############
+
+training_module.form_link:
+  title: 'A simple form'
+  description: 'Display a simple form'
+  route_name: training_module.form
+  weight: 12
+training_module.input_demo_link:
+  title: 'A form to demonstrate input elements'
+  description: 'Display differents inputs'
+  route_name: training_module.input_demo
+  weight: 13
+training_module.multistep_one_link:
+  title: 'A example of a multistep form'
+  description: 'This is the entry point of the multistep form'
+  route_name: training_module.multistep_one
+  weight: 14

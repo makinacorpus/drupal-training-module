@@ -1,0 +1,167 @@
+###############################
+# TRAINING CONTROLLER & ROUTING
+###############################
+
+# Simple page.
+training_module.page:
+  path: '/controller'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingController::render
+    _title: 'A simple page'
+  requirements:
+    _permission: 'access content'
+# The ControllerBase.
+training_module.extend_example:
+  path: '/controller/extends'
+  defaults:
+    _controller: \Drupal\training_module\Controller\BaseClassExamplesController::services
+    _title: 'What Controller base provide'
+  requirements:
+    _permission: 'access content'
+# Page managing request.
+training_module.request:
+  path: '/controller/request'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingController::request
+    _title: 'A page using the request'
+  requirements:
+    _permission: 'access content'
+# Page using arguments.
+training_module.page_with_argument:
+  path: '/controller/{foo}/{bar}'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingController::renderArgument
+    _title: 'A page managing parameters'
+  requirements:
+    _permission: 'access content'
+    foo: \d+
+    bar: '[a-z]+'
+training_module.page_with_user_loaded:
+  path: '/controller/user/{user}'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingController::renderAccountInterface
+    _title: 'A page loading an User'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      user:
+        type: entity:user
+training_module.page_with_node_loaded:
+  path: '/controller/node/{node}'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingController::renderNodeInterface
+    _title: 'A page loading a Node'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      user:
+        type: entity:node
+# Page using a custom callback.
+training_module.page_with_dynamic_title:
+  path: '/controller/custom-title'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingController::render
+    _title_callback: \Drupal\training_module\Controller\TrainingController::getTitle
+  requirements:
+    _permission: 'access content'
+training_module.page_with_controle_access:
+  path: '/controller/access'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingController::render
+    _title: 'A page with dynamic access management'
+  requirements:
+    _custom_access: '\Drupal\training_module\Access\TrainingAccessController::checkAccess'
+
+
+##############################
+# ENTITY & DATABASE MANAGEMENT
+##############################
+
+# Manage entities.
+training_module.entity_management:
+  path: '/entity-management'
+  defaults:
+    _controller: \Drupal\training_module\Controller\EntityManagementController::dump
+    _title: 'A simple page'
+  requirements:
+    _permission: 'access content'
+# Manage database.
+training_module.database:
+  path: '/controller/database'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingDatabaseController::readDatabase
+    _title: 'Some queries on database'
+  requirements:
+    _permission: 'access content'
+# Manage entity queries.
+training_module.entities_query:
+  path: '/controller/entityquery'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingDatabaseController::readEntity
+    _title: 'Some queries on entities'
+  requirements:
+    _permission: 'access content'
+
+
+###############
+# TRAINING FORM
+###############
+
+# Simple form.
+training_module.form:
+  path: '/form/simple'
+  defaults:
+    _form: '\Drupal\training_module\Form\TrainingForm'
+    _title: 'A simple form'
+  requirements:
+    _permission: 'access content'
+# Demo form.
+training_module.input_demo:
+  path: '/form/demo'
+  defaults:
+    _form: '\Drupal\training_module\Form\TrainingDemoForm'
+    _title: 'A form to demonstrate input elements'
+  requirements:
+    _permission: 'access content'
+# Multistep Form.
+training_module.multistep_one:
+  path: '/form/multistep-one'
+  defaults:
+    _form: '\Drupal\training_module\Form\Multistep\MultiStepOneForm'
+    _title: 'Multistep form / Step one'
+  requirements:
+    _permission: 'access content'
+training_module.multistep_two:
+  path: '/form/multistep-two'
+  defaults:
+    _form: '\Drupal\training_module\Form\Multistep\MultiStepTwoForm'
+    _title: 'Multistep form / Step two'
+  requirements:
+    _permission: 'access content'
+# Redirection Controller using request manager.
+training_module.redirection_using_qp:
+  path: '/form/request-manager-redirection'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingFormController::formRedirectUsingRequestManager
+  requirements:
+    _permission: 'access content'
+# Redirection Controller using tempstore.
+training_module.redirection_using_ts:
+  path: '/form/tempstore-redirection'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingFormController::formRedirectUsingTempStore
+  requirements:
+    _permission: 'access content'
+
+##################
+# TRAINING SERVICE
+##################
+training_module.service:
+  path: '/controller/service'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingServiceController::render
+    _title: 'Using a custom service'
+  requirements:
+    _permission: 'access content'

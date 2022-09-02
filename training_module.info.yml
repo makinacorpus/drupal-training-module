@@ -1,0 +1,7 @@
+name: 'Training Drupal Development'
+package: 'Training'
+type: module
+core_version_requirement: ^8 || ^9
+description: 'Training on the basics of Drupal development'
+libraries:
+  - training/global

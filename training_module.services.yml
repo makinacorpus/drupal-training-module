@@ -1,0 +1,5 @@
+services:
+  training_module.training_service:
+    class: Drupal\training_module\Service\TrainingService
+    arguments: ['@current_user']
+    tags:

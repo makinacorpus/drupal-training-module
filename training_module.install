@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Do something
+ */
+function training_module_update_9001(){
+  // do something
+}
