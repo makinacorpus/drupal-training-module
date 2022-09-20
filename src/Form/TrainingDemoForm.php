@@ -26,12 +26,13 @@ class TrainingDemoForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $form['description'] = [
+    // Checkboxes.
+    $form['item'] = [
       '#type' => 'item',
       '#markup' => $this->t('This example shows the use of all input-types.'),
     ];
 
-    // CheckBoxes.
+    // Checkboxes.
     $form['checkboxes'] = [
       '#type' => 'checkboxes',
       '#options' => ['coffee' => $this->t('Coffee'), 'tea' => $this->t('Tea')],
@@ -191,12 +192,10 @@ class TrainingDemoForm extends FormBase {
         'last_name' => 'Doe',
       ],
     ];
-
     $header = [
       'first_name' => $this->t('First name'),
       'last_name' => $this->t('Last name'),
     ];
-
     $form['tableselect'] = [
       '#type' => 'tableselect',
       '#title' => $this->t('Table select'),
@@ -242,9 +241,6 @@ class TrainingDemoForm extends FormBase {
       '#delta' => 10,
       '#description' => $this->t('Weight, #type = weight'),
     ];
-
-
-
 
     // File.
     $form['file'] = [
