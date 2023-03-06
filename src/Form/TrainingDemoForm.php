@@ -2,9 +2,11 @@
 
 namespace Drupal\training_module\Form;
 
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * TrainingDemoForm.
@@ -13,6 +15,29 @@ use Drupal\Core\Url;
  * collect data in a form.
  */
 class TrainingDemoForm extends FormBase {
+
+  /**
+   * The module extension list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected $moduleExtensionList;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('extension.list.module'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(ModuleExtensionList $module_extension_list) {
+    $this->moduleExtensionList = $module_extension_list;
+  }
 
   /**
    * {@inheritdoc}
@@ -260,7 +285,7 @@ class TrainingDemoForm extends FormBase {
     $form['image_button'] = [
       '#type' => 'image_button',
       '#value' => $this->t('Image button'),
-      '#src' => drupal_get_path('module', 'training_module') . '/images/drupalicon.png',
+      '#src' => $this->moduleExtensionList->getPath('training_module') . '/images/drupalicon.png',
       '#attributes' => [
         'width' => '100px',
       ],
