@@ -4,6 +4,7 @@ namespace Drupal\training_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Database;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -107,4 +108,15 @@ class TrainingDatabaseController extends ControllerBase {
     ];
   }
 
+  public function readExternalDatabase() {
+    Database::setActiveConnection('external');
+    $connection = Database::getConnection();
+
+    $query = $connection->select('mailing', 'm')->fields('m', ['lastname', 'mail']);
+    $results = $query->execute();
+
+    foreach ($results as $record) {
+      \dump($record);
+    }
+  }
 }

@@ -59,14 +59,19 @@ training_module.entiy_management_link:
 
 training_module.database_link:
   title: 'Some queries on database'
-  description: 'how to request a database'
+  description: 'how to request the database'
   route_name: training_module.database
   weight: 9
+training_module.database_external_link:
+  title: 'Some queries on an external database'
+  description: 'how to request an external database'
+  route_name: training_module.database.external
+  weight: 10
 training_module.entities_query_link:
   title: 'Some queries on entities'
   description: 'how to request entitites'
   route_name: training_module.entities_query
-  weight: 10
+  weight: 11
 
 ##################
 # TRAINING SERVICE
@@ -76,7 +81,7 @@ training_module.service_link:
   title: 'Controller using a custom service'
   description: 'how to use a service'
   route_name: training_module.service
-  weight: 11
+  weight: 12
 
 ###############
 # TRAINING FORM
@@ -86,14 +91,14 @@ training_module.form_link:
   title: 'A simple form'
   description: 'Display a simple form'
   route_name: training_module.form
-  weight: 12
+  weight: 13
 training_module.input_demo_link:
   title: 'A form to demonstrate input elements'
   description: 'Display differents inputs'
   route_name: training_module.input_demo
-  weight: 13
+  weight: 14
 training_module.multistep_one_link:
   title: 'A example of a multistep form'
   description: 'This is the entry point of the multistep form'
   route_name: training_module.multistep_one
-  weight: 14
+  weight: 15

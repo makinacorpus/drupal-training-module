@@ -95,6 +95,14 @@ training_module.database:
     _title: 'Some queries on database'
   requirements:
     _permission: 'access content'
+# Manage external database.
+training_module.database.external:
+  path: '/controller/database/external'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingDatabaseController::readExternalDatabase
+    _title: 'Some queries on database'
+  requirements:
+    _permission: 'access content'
 # Manage entity queries.
 training_module.entities_query:
   path: '/controller/entityquery'
