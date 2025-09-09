@@ -1,26 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Plugin\Block\TrainingBlock;
 
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Training block with configuration form.
- *
- * @Block(
- *  id = "training_block_config_form",
- *  admin_label = @Translation("Training block using a configuration form"),
- *  category = @Translation("Training module"),
- * )
  */
+#[Block(
+  id: 'training_block_config_form',
+  admin_label:  new TranslatableMarkup('Training block using a configuration form'),
+  category:  new TranslatableMarkup('Training module'),
+)]
 class TrainingBlockUsingConfigurationForm extends BlockBase implements BlockPluginInterface {
 
   /**
    * {@inheritdoc}
    */
-  public function blockForm($form, FormStateInterface $form_state) {
+  public function blockForm($form, FormStateInterface $form_state): array {
     $form = parent::blockForm($form, $form_state);
     $config = $this->getConfiguration();
 
@@ -48,7 +51,7 @@ class TrainingBlockUsingConfigurationForm extends BlockBase implements BlockPlug
   /**
    * {@inheritdoc}
    */
-  public function blockSubmit($form, FormStateInterface $form_state) {
+  public function blockSubmit($form, FormStateInterface $form_state): void {
     parent::blockSubmit($form, $form_state);
     $values = $form_state->getValues();
     $this->configuration['text'] = $values['text'];
@@ -58,8 +61,7 @@ class TrainingBlockUsingConfigurationForm extends BlockBase implements BlockPlug
   /**
    * {@inheritdoc}
    */
-  public function build() {
-
+  public function build(): array {
     $config = $this->getConfiguration();
 
     $text = !empty($config['text']) ? $config['text'] : '';

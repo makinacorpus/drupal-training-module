@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Form\Multistep;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -14,7 +16,7 @@ class MultiStepTwoForm extends MultiStepBaseForm {
    *
    * {@inheritdoc}.
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'multistep_form_two';
   }
 
@@ -23,7 +25,7 @@ class MultiStepTwoForm extends MultiStepBaseForm {
    *
    * {@inheritdoc}.
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
 
     $form = parent::buildForm($form, $form_state);
 
@@ -41,7 +43,7 @@ class MultiStepTwoForm extends MultiStepBaseForm {
    *
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->store->set('email', $form_state->getValue('email'));
 
     $triggering = $form_state->getTriggeringElement();

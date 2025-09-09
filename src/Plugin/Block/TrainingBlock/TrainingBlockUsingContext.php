@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Plugin\Block\TrainingBlock;
 
 use Drupal\Core\Block\BlockBase;
@@ -26,7 +28,7 @@ class TrainingBlockUsingContext extends BlockBase {
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
     $definitions = $this->getContextDefinitions();
     $contexts = $this->getContextValues();
 

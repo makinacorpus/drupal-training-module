@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -17,7 +19,7 @@ class TrainingDatabaseController extends ControllerBase {
    *
    * @var \Drupal\Core\Database\Connection
    */
-  protected $database;
+  protected Connection $database;
 
   /**
    * {@inheritdoc}
@@ -39,8 +41,11 @@ class TrainingDatabaseController extends ControllerBase {
    * Database queries examples.
    *
    * This callback is mapped to the path /controller/database.
+   *
+   * @return array
+   *   A render array.
    */
-  public function readDatabase() {
+  public function readDatabase(): array {
 
     $query = $this->database->select('users', 'u')
       ->fields('u', ['uid', 'uuid']);
@@ -69,14 +74,21 @@ class TrainingDatabaseController extends ControllerBase {
     \dump($query->execute()->fetchAllAssoc('uid'));
     \dump('fetchAllKeyed');
     \dump($query->execute()->fetchAllKeyed());
+
+    return [
+      '#markup' => 'Hello World \o/',
+    ];
   }
 
   /**
    * EntityQuery's examples.
    *
    * This callback is mapped to the path /controller/entityquery.
+   *
+   * @return array
+   *   A render array.
    */
-  public function readEntity() {
+  public function readEntity(): array {
 
     $entity_type = 'user';
     // $entity_type = 'node';
@@ -108,7 +120,15 @@ class TrainingDatabaseController extends ControllerBase {
     ];
   }
 
-  public function readExternalDatabase() {
+  /**
+   * Example of the use of a third-party database.
+   *
+   * This callback is mapped to the path /controller/database/external.
+   *
+   * @return array
+   *   A render array.
+   */
+  public function readExternalDatabase(): array {
     Database::setActiveConnection('external');
     $connection = Database::getConnection();
 
@@ -118,5 +138,9 @@ class TrainingDatabaseController extends ControllerBase {
     foreach ($results as $record) {
       \dump($record);
     }
+
+    return [
+      '#markup' => 'Hello World \o/',
+    ];
   }
 }

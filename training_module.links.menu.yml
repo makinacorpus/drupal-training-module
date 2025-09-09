@@ -12,6 +12,11 @@ training_module.request:
   description: 'Dump the Request object'
   route_name: training_module.request
   weight: 2
+training_module.json:
+  title: 'A controller can return json'
+  description: 'Return a json object'
+  route_name: training_module.json
+  weight: 2
 training_module.page_with_argument_link:
   title: 'A page managing parameters'
   description: 'Display route parameters in an item list'

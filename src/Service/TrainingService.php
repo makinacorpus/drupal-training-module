@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Service;
 
 use Drupal\Core\Session\AccountProxy;
@@ -14,33 +16,33 @@ class TrainingService {
    *
    * @var \Drupal\Core\Session\AccountProxy
    */
-  protected $currentUser;
+  protected AccountProxy $currentUser;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(AccountProxy $current_user) {
-    $this->currentUSer = $current_user;
+  public function __construct(AccountProxy $currentUser) {
+    $this->currentUser = $currentUser;
   }
 
   /**
    * Return account name.
    */
-  public function getAccountName() {
-    return $this->currentUSer->getAccountName();
+  public function getAccountName(): string {
+    return $this->currentUser->getAccountName();
   }
 
   /**
-   * Return foo !
+   * Return foo.
    */
-  public function doFoo() {
+  public function doFoo(): string {
     return 'foo';
   }
 
   /**
-   * Return bar !
+   * Return bar.
    */
-  public function doBar() {
+  public function doBar(): string {
     return 'bar';
   }
 

@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
+use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a controller to show the different fields usable in a custom form.
@@ -17,21 +21,14 @@ class TrainingFormController extends ControllerBase {
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $requestManager;
-
-  /**
-   * The tempstore service.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
-   */
-  protected $tempStoreFactory;
+  protected RequestStack $requestManager;
 
   /**
    * The store using by our class.
    *
-   * @var \Drupal\user\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
-  protected $store;
+  protected PrivateTempStore $store;
 
   /**
    * {@inheritdoc}
@@ -40,25 +37,29 @@ class TrainingFormController extends ControllerBase {
     return new static(
         $container->get('request_stack'),
         $container->get('tempstore.private'),
-        $container->get('training_module.training_service'),
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(RequestStack $request_manager,
-    PrivateTempStoreFactory $temp_store_factory
+  public function __construct(
+    RequestStack $requestManager,
+    PrivateTempStoreFactory $tempStoreFactory
   ) {
-    $this->requestManager = $request_manager;
-    $this->tempStoreFactory = $temp_store_factory;
-    $this->store = $this->tempStoreFactory->get('training_form');
+    $this->requestManager = $requestManager;
+    $this->store = $tempStoreFactory->get('training_form');
   }
 
   /**
    * You can access to the query params.
+   *
+   * @return array
+   *   A render array.
    */
-  public function formRedirectUsingRequestManager() {
+  public function formRedirectUsingRequestManager(Request $request): array {
+    $params = $request->query->all();
+    dump($params);
     $input = (\array_key_exists('input', $params)) ?
       $this->t("My input: @string.", ['@string' => $params['input']]) :
       $this->t('Unavailable');
@@ -72,8 +73,11 @@ class TrainingFormController extends ControllerBase {
 
   /**
    * You can use a tempStore.
+   *
+   * @return array
+   *   A render array.
    */
-  public function formRedirectUsingTempStore() {
+  public function formRedirectUsingTempStore(): array {
     $input = !\is_null($this->store->get('input')) ?
       $this->t("My input: @string.", ['@string' => $this->store->get('input')]) :
       $this->t('Unavailable');

@@ -18,6 +18,14 @@ training_module.extend_example:
     _title: 'What Controller base provide'
   requirements:
     _permission: 'access content'
+# Page returning a json.
+training_module.json:
+  path: '/controller/json'
+  defaults:
+    _controller: \Drupal\training_module\Controller\TrainingController::renderJson
+    _title: 'A page rendering a Json'
+  requirements:
+    _permission: 'access content'
 # Page managing request.
 training_module.request:
   path: '/controller/request'

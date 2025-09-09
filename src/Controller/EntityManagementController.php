@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -13,20 +15,25 @@ class EntityManagementController extends ControllerBase {
    * Dump entities.
    *
    * This callback is mapped to the path /entity-management.
+   *
+   * @return array
+   *   A render array.
    */
-  public function dump() {
+  public function dump(): array {
 
-    // $entity_type_id = 'node';
-    // $entity_type_id = 'taxonomy_term';
-    // $entity_type_id = 'block_content';
-    // $entity_type_id = 'user';
-    // $entity_type_id = 'contact_message';
-    $entity_type_id = 'node';
+    // $entityTypeId = 'node';
+    // $entityTypeId = 'taxonomy_term';
+    // $entityTypeId = 'block_content';
+    // $entityTypeId = 'user';
+    // $entityTypeId = 'contact_message';
+    $entityTypeId = 'node';
 
     // Set the nid of a pokemon.
-    $nid = 15;
-    $node_storage_interface = $this->entityTypeManager()->getStorage($entity_type_id);
-    $entity = $node_storage_interface->load($nid);
+    $nid = 1;
+    $nodeStorageInterface = $this->entityTypeManager()->getStorage($entityTypeId);
+
+    /** @var \Drupal\node\Entity\Node $entity */
+    $entity = $nodeStorageInterface->load($nid);
 
     \dump('----------------------------------------------');
     \dump('##                NODE TITLE                ##');
@@ -97,6 +104,10 @@ class EntityManagementController extends ControllerBase {
     \dump($entity->get('field_types')->getString());
     // You get all the entities.
     \dump($entity->get('field_types')->referencedEntities());
+
+    return [
+      '#markup' => 'Hello World \o/',
+    ];
   }
 
 }

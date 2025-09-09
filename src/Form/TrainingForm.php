@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines an example form.
@@ -17,14 +20,14 @@ class TrainingForm extends FormBase {
    *
    * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
    */
-  protected $tempStoreFactory;
+  protected PrivateTempStoreFactory $tempStoreFactory;
 
   /**
    * The store using by our class.
    *
-   * @var \Drupal\user\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
-  protected $store;
+  protected PrivateTempStore $store;
 
   /**
    * {@inheritdoc}
@@ -38,22 +41,22 @@ class TrainingForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory) {
-    $this->tempStoreFactory = $temp_store_factory;
+  public function __construct(PrivateTempStoreFactory $tempStoreFactory) {
+    $this->tempStoreFactory = $tempStoreFactory;
     $this->store = $this->tempStoreFactory->get('training_form');
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'training_form';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
 
     $form['description'] = [
       '#type' => 'item',
@@ -86,7 +89,7 @@ class TrainingForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
     $input = $form_state->getValue('input_text');
     if (preg_match('/\d/', $input)) {
       $form_state->setErrorByName('input_text', $this->t('Numbers are not allowed !'));
@@ -96,7 +99,7 @@ class TrainingForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
 
     // Using query parameters.
     $parameters = [

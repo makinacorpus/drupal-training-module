@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Form;
 
 use Drupal\Core\Extension\ModuleExtensionList;
@@ -21,7 +23,7 @@ class TrainingDemoForm extends FormBase {
    *
    * @var \Drupal\Core\Extension\ModuleExtensionList
    */
-  protected $moduleExtensionList;
+  protected ModuleExtensionList $moduleExtensionList;
 
   /**
    * {@inheritdoc}
@@ -35,21 +37,21 @@ class TrainingDemoForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(ModuleExtensionList $module_extension_list) {
-    $this->moduleExtensionList = $module_extension_list;
+  public function __construct(ModuleExtensionList $moduleExtensionList) {
+    $this->moduleExtensionList = $moduleExtensionList;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'training_demo_form';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
 
     // Checkboxes.
     $form['item'] = [
@@ -235,6 +237,10 @@ class TrainingDemoForm extends FormBase {
     $form['textarea'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Textarea'),
+      '#default_value' => 'First I was born, and then ...',
+      '#rows' => 10,
+      '#cols' => 60,
+      '#resizable' => TRUE,
       '#description' => $this->t('Textarea, #type = textarea'),
     ];
 
@@ -347,7 +353,7 @@ class TrainingDemoForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
   }
 
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -16,7 +18,7 @@ class TrainingServiceController extends ControllerBase {
    *
    * @var \Drupal\training_module\Service\TrainingService
    */
-  protected $trainingService;
+  protected TrainingService $trainingService;
 
   /**
    * {@inheritdoc}
@@ -30,15 +32,18 @@ class TrainingServiceController extends ControllerBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(TrainingService $training_service) {
-    $this->trainingService = $training_service;
+  public function __construct(TrainingService $trainingService) {
+    $this->trainingService = $trainingService;
   }
 
   /**
-   * You can access to the query params.
+   * You can use the service.
+   *
+   * @return array
+   *   A render array.
    */
-  public function render() {
-    $items_list = [
+  public function render(): array {
+    $itemsList = [
       $this->trainingService->getAccountName(),
       $this->trainingService->doFoo(),
       $this->trainingService->doBar(),
@@ -46,7 +51,7 @@ class TrainingServiceController extends ControllerBase {
 
     return [
       '#theme' => 'item_list',
-      '#items' => $items_list,
+      '#items' => $itemsList,
     ];
   }
 

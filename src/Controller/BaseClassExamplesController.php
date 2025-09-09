@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -13,13 +15,16 @@ class BaseClassExamplesController extends ControllerBase {
    * Controller base prodive many services.
    *
    * This callback is mapped to the path /controller/extends.
+   *
+   * @return array
+   *   A render array.
    */
-  public function services() {
+  public function services(): array {
 
     // Return current user.
     // @return \Drupal\Core\Session\AccountInterface
-    $current_user = $this->currentUser();
-    \dump($current_user);
+    $currentUser = $this->currentUser();
+    \dump($currentUser);
 
     // Return Entity Type Mananger.
     // Allows to load or to make a request on entities.
@@ -28,21 +33,22 @@ class BaseClassExamplesController extends ControllerBase {
     $this->entityTypeManager();
 
     // Get an entity.
-    $entity_type_id = 'user';
-    // $entity_type_id = 'node';
-    // $entity_type_id = 'comment';
-    // $entity_type_id = 'taxonomy_term';
-    // $entity_type_id = 'contact_message';
+    $entityTypeId = 'user';
+    // $entityTypeId = 'node';
+    // $entityTypeId = 'comment';
+    // $entityTypeId = 'taxonomy_term';
+    // $entityTypeId = 'contact_message';
     $id = $uid = $nid = $cid = $tid = 1;
-    $user_storage = $this->entityTypeManager()->getStorage($entity_type_id);
-    $user_by_load = $user_storage->load($id);
-    \dump($user_by_load);
+    $userStorage = $this->entityTypeManager()->getStorage($entityTypeId);
+    $loadedUser = $userStorage->load($id);
+    \dump($loadedUser);
 
     // Make a query on an entity.
-    $user_id = $this->entityTypeManager()->getStorage($entity_type_id)->getQuery()
+    $userId = $this->entityTypeManager()->getStorage($entityTypeId)->getQuery()
+      ->accessCheck()
       ->condition('uid', $uid, '=')
       ->execute();
-    \dump($user_id);
+    \dump($userId);
 
     // Return the form builder.
     // Allows to create custom form.
@@ -57,14 +63,14 @@ class BaseClassExamplesController extends ControllerBase {
 
     // Fisrt, get the entity.
     // Next, construct the form.
-    $entity_type_id = 'contact_message';
-    $form_entity = $this->entityTypeManager()
-      ->getStorage($entity_type_id)
+    $entityTypeId = 'contact_message';
+    $formEntity = $this->entityTypeManager()
+      ->getStorage($entityTypeId)
       ->create([
         'contact_form' => 'feedback',
       ]);
 
-    $form = $this->entityFormBuilder->getForm($form_entity);
+    $form = $this->entityFormBuilder->getForm($formEntity);
     \dump($form);
 
     // Make redirections.

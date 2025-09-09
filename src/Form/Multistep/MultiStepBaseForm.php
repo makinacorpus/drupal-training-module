@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Form\Multistep;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\SessionManagerInterface;
+use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -14,25 +17,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 abstract class MultiStepBaseForm extends FormBase {
 
   /**
-   * The tempstore service.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
-   */
-  protected $tempStoreFactory;
-
-  /**
    * The session manager.
    *
    * @var \Drupal\Core\Session\SessionManagerInterface
    */
-  private $sessionManager;
+  private SessionManagerInterface $sessionManager;
 
   /**
    * The store using by our class.
    *
-   * @var \Drupal\user\PrivateTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
-  protected $store;
+  protected PrivateTempStore $store;
 
   /**
    * {@inheritdoc}
@@ -47,10 +43,12 @@ abstract class MultiStepBaseForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, SessionManagerInterface $session_manager) {
-    $this->tempStoreFactory = $temp_store_factory;
-    $this->sessionManager = $session_manager;
-    $this->store = $this->tempStoreFactory->get('training_exemple_form');
+  public function __construct(
+    PrivateTempStoreFactory $tempStoreFactory,
+    SessionManagerInterface $sessionManager
+  ) {
+    $this->sessionManager = $sessionManager;
+    $this->store = $tempStoreFactory->get('training_exemple_form');
   }
 
   /**
@@ -58,8 +56,7 @@ abstract class MultiStepBaseForm extends FormBase {
    *
    * {@inheritdoc}.
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
-
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     // Start a manual session for anonymous users.
     if ($this->currentUser()->isAnonymous() && !isset($_SESSION['multistep_form_holds_session'])) {
       $_SESSION['multistep_form_holds_session'] = TRUE;
@@ -87,7 +84,7 @@ abstract class MultiStepBaseForm extends FormBase {
   /**
    * Saves the data from the multistep form.
    */
-  protected function saveData() {
+  protected function saveData(): void {
     // Logic for saving data goes here.
     $this->deleteStore();
     $this->messenger()->addStatus($this->t('The form has been saved.'));
@@ -96,7 +93,7 @@ abstract class MultiStepBaseForm extends FormBase {
   /**
    * Helper method that removes all the keys from the store collection.
    */
-  protected function deleteStore() {
+  protected function deleteStore(): void {
     $keys = ['name', 'email', 'postal_code', 'location'];
     foreach ($keys as $key) {
       $this->store->delete($key);

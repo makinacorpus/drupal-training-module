@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\training_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Defines a controller to show implementations related to properties of route.
@@ -16,22 +20,51 @@ class TrainingController extends ControllerBase {
    * Simple controller render a markup.
    *
    * This callback is mapped to the path /controller.
+   *
+   * @return array
+   *   A render array.
    */
-  public function render() {
+  public function render(): array {
     return [
-      '#markup' => 'Hello world \o/',
+      '#markup' => $this->t('Hello world'),
     ];
   }
 
   /**
    * Simple controller render a markup.
    *
-   * This callback is mapped to the path /controller/request.
+   * This callback is mapped to the path /controller.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   A JsonResponse object.
    */
-  public function request(Request $request) {
+  public function renderJson(): JsonResponse {
+    $data = [
+      [
+        'id' => '1',
+        'title' => 'Title 1',
+      ],
+      [
+        'id' => '2',
+        'title' => 'Title 2',
+      ],
+    ];
+
+    return new JsonResponse($data, 200);
+ }
+
+  /**
+   * Simple controller render a markup.
+   *
+   * This callback is mapped to the path /controller/request.
+   *
+   * @return array
+   *   A render array.
+   */
+  public function request(Request $request): array {
     dump($request);
     return [
-      '#markup' => 'Hello world \o/',
+      '#markup' => $this->t('Hello world'),
     ];
   }
 
@@ -45,10 +78,13 @@ class TrainingController extends ControllerBase {
    * @param string $bar
    *   Second parameter.
    *
+   * @return array
+   *   A render array.
+   *
    * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
    *   If the parameters are invalid.
    */
-  public function renderArgument($foo, $bar) {
+  public function renderArgument($foo, $bar): array {
     // Make sure you don't trust the URL to be safe! Always check for exploits.
     if (!is_numeric($foo) || !is_string($bar)) {
       // We will just show a standard "access denied" page in this case.
@@ -72,10 +108,13 @@ class TrainingController extends ControllerBase {
    *
    * This callback is mapped to the path /controller/user/{user}
    *
-   * @param Drupal\Core\Session\AccountInterface $user
+   * @param \Drupal\Core\Session\AccountInterface $user
    *   The entire entity.
+   *
+   * @return array
+   *   A render array.
    */
-  public function renderAccountInterface(AccountInterface $user) {
+  public function renderAccountInterface(AccountInterface $user): array {
     return [
       '#markup' => $user->getAccountName(),
       '#prefix' => '<p>',
@@ -88,22 +127,17 @@ class TrainingController extends ControllerBase {
    *
    * This callback is mapped to the path /controller/user/{user}
    *
-   * @param Drupal\node\NodeInterface $node
+   * @param \Drupal\node\NodeInterface $node
    *   The entire entity.
+   *
+   * @return array
+   *   A render array.
    */
-  public function renderNodeInterface(NodeInterface $node) {
+  public function renderNodeInterface(NodeInterface $node): array {
     return [
       '#markup' => $node->getTitle(),
       '#prefix' => '<p>',
       '#suffix' => '</p>',
     ];
   }
-
-  /**
-   * Create a title.
-   */
-  public function getTitle() {
-    return $this->currentUser()->getAccountName();
-  }
-
 }

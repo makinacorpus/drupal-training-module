@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @file
+ * Implements custom features.
  */
 
 use Drupal\Core\Form\FormStateInterface;
@@ -25,7 +28,7 @@ function training_module_help($route_name, RouteMatchInterface $route_match) {
 /**
  * Implements hook_form_alter()
  */
-function training_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function training_module_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   // \dump($form);
   // \dump($form_id);
 }
@@ -33,7 +36,7 @@ function training_module_form_alter(&$form, FormStateInterface $form_state, $for
 /**
  * Implements hook_theme().
  */
-function training_module_theme($existing, $type, $theme, $path) {
+function training_module_theme($existing, $type, $theme, $path): array {
   return [
     'block_template' => [
       'template' => 'block/block-template',
